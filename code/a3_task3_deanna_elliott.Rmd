@@ -32,14 +32,39 @@ urchins <- read_csv(here("data", "urchins.csv")) %>%
   clean_names()
 ```
 
-## Data Wrangling ##
+## Data Visualization ##
 
 ```{r histogram}
 
+ggplot(data = urchins,
+       aes(x = size, fill = common_name)) +
+           scale_fill_manual(values = c("darkorchid3", "firebrick3"),
+                             name = "Species") +
+  geom_histogram(binwidth = 10) +
+  facet_wrap(~ common_name) +
+  labs(x = "Diameter (cm)",
+           y = "Count")
 ```
+
+**Figure 1. Urchin count by size and species.** This histogram shows observations of the number and diameter in cm of purple and red sea urchins (*Strongylocentrotus purpuratus* and *Mesocentrotus franciscanus*) from 5 sites along the Santa Barbara Coastal LTER.
+
+**
+
+**Table 1. Summary statistics for urchin sizes.** Mean, standard deviation, and median in cm and sample size of purple and red sea  urchins (*Strongylocentrotus purpuratus* and *Mesocentrotus franciscanus*) observed at Santa Barbara Coastal LTER.
 
 ```{r stats table}
 
+urchin_summary <- urchins %>% 
+  group_by(common_name) %>% 
+  summarize(mean_size_cm = mean(size, na.rm = TRUE), 
+            sd_size_cm = sd(size, na.rm = TRUE),
+            median_size_cm = median(size, na.rm = TRUE),
+            sample_size = n())
+
+urchin_summary %>% 
+  kbl(col.names = c("Species Common Name", "Mean Size (cm)", "Standard Deviation (cm)",
+                    "Median Size (cm)", "Sample Size (n)")) %>% 
+  kable_classic()
 ```
 
 TAKEAWAY GOES HERE
@@ -47,8 +72,6 @@ TAKEAWAY GOES HERE
 ```{r filter purple}
 
 ```
-
-## Data Visualization ##
 
 ```{r purple table, include = FALSE}
 
