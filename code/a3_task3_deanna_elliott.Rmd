@@ -15,6 +15,7 @@ library(tidyverse)
 library(here)
 library(janitor)
 library(kableExtra)
+library(lubridate)
 ```
 
 ## Overview ##
@@ -35,6 +36,8 @@ urchins <- read_csv(here("data", "urchins.csv")) %>%
 
 ## Data Visualization ##
 
+Create a species-faceted histogram of urchin size and count with caption
+
 ```{r histogram}
 
 ggplot(data = urchins,
@@ -50,6 +53,9 @@ ggplot(data = urchins,
 
 **Figure 1. Urchin count by size and species.** This histogram shows observations of the number and diameter in cm of purple and red sea urchins (*Strongylocentrotus purpuratus* and *Mesocentrotus franciscanus*) from 5 sites along the Santa Barbara Coastal LTER.
 
+**
+
+Create a summary table of mean, stdev, median, and sample size for ech urchin species
 
 ```{r stats table}
 
@@ -71,9 +77,16 @@ urchin_summary %>%
 
 Based on the histogram and the summary statistics, red urchins are, on average, approximately 2.5 cm--or 35%--larger than purple urchins. Red urchins also have a larger size range compared to purple, as their distribution in the histogram is more widely spread. The central tendencies of each species are expressed approximately equally by the mean and median (4.5 cm and 4.5 cm for purple; 6.8 cm and 7.0 cm for red).
 
+## Data Wrangling ##
+
 ```{r filter purple}
 
+purple_urchins <- urchins %>% 
+  filter(common_name == "Purple Urchin")
+
 ```
+
+## Data Visualization ##
 
 ```{r purple table, include = FALSE}
 
