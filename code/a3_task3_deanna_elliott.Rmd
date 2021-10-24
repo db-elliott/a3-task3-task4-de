@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=TRUE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+options(digits = 2)
 
 #attach packages
 
@@ -40,7 +41,8 @@ ggplot(data = urchins,
        aes(x = size, fill = common_name)) +
            scale_fill_manual(values = c("darkorchid3", "firebrick3"),
                              name = "Species") +
-  geom_histogram(binwidth = 10) +
+  xlim(0, 15) +
+  geom_histogram(bins = 10) +
   facet_wrap(~ common_name) +
   labs(x = "Diameter (cm)",
            y = "Count")
@@ -48,9 +50,6 @@ ggplot(data = urchins,
 
 **Figure 1. Urchin count by size and species.** This histogram shows observations of the number and diameter in cm of purple and red sea urchins (*Strongylocentrotus purpuratus* and *Mesocentrotus franciscanus*) from 5 sites along the Santa Barbara Coastal LTER.
 
-**
-
-**Table 1. Summary statistics for urchin sizes.** Mean, standard deviation, and median in cm and sample size of purple and red sea  urchins (*Strongylocentrotus purpuratus* and *Mesocentrotus franciscanus*) observed at Santa Barbara Coastal LTER.
 
 ```{r stats table}
 
@@ -63,11 +62,14 @@ urchin_summary <- urchins %>%
 
 urchin_summary %>% 
   kbl(col.names = c("Species Common Name", "Mean Size (cm)", "Standard Deviation (cm)",
-                    "Median Size (cm)", "Sample Size (n)")) %>% 
+                    "Median Size (cm)", "Sample Size (n)"),
+      caption = "<b>Table 1. Summary statistics for urchin sizes.</b> Mean, standard deviation, and median in cm and sample size of purple and red sea  urchins (<i>Strongylocentrotus purpuratus</i> and <i>Mesocentrotus franciscanus</i>) observed at Santa Barbara Coastal LTER.") %>% 
   kable_classic()
 ```
 
-TAKEAWAY GOES HERE
+### Takeaways ###
+
+Based on the histogram and the summary statistics, red urchins are, on average, approximately 2.5 cm--or 35%--larger than purple urchins. Red urchins also have a larger size range compared to purple, as their distribution in the histogram is more widely spread. The central tendencies of each species are expressed approximately equally by the mean and median (4.5 cm and 4.5 cm for purple; 6.8 cm and 7.0 cm for red).
 
 ```{r filter purple}
 
