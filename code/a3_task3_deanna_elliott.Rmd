@@ -79,9 +79,9 @@ Based on the histogram and the summary statistics, red urchins are, on average, 
 
 ## Data Wrangling ##
 
-```{r filter purple}
+Filter to only purple urchins, change "date" column class to date from character, add "year" and "site_full" columns
 
-class(date)
+```{r filter purple}
 
 purple_urchins <- urchins %>% 
   filter(common_name == "Purple Urchin") %>% 
@@ -96,6 +96,8 @@ purple_urchins <- urchins %>%
 ```
 
 ## Data Visualization ##
+
+Group purple urchins by site and year, find sample sizes, plot 
 
 ```{r purple table, include = FALSE}
 
@@ -118,6 +120,9 @@ ggplot(purple_sample,
 
 **Figure 2. Urchin count by site and year.** This bar graph shows observations of the sample size of purple sea urchins (*Strongylocentrotus purpuratus*) across several years at 5 sites along the Santa Barbara Coastal LTER.
 
-GRAPH QUESTIONS
+**
+
+Based on the above graph, it seems that the purple urchin population has gone down in recent years. However, we must take into account the time and effort put into data collection each year; if, for example, one year had fewer volunteers for data collection, there may be fewer observations just by virtue of less manpower. Other possible explanations for population changes include predator levels, ocean chemistry changes, etc.
 
 ## End Task ##
+
