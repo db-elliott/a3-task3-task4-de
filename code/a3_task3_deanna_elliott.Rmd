@@ -81,20 +81,42 @@ Based on the histogram and the summary statistics, red urchins are, on average, 
 
 ```{r filter purple}
 
-purple_urchins <- urchins %>% 
-  filter(common_name == "Purple Urchin")
+class(date)
 
+purple_urchins <- urchins %>% 
+  filter(common_name == "Purple Urchin") %>% 
+  mutate(date = mdy(date)) %>% 
+  mutate(year = year(date)) %>% 
+  mutate(site_full = case_when(
+    site == "NAPL" ~ "Naples Reef",
+    site == "AQUE" ~ "Arroyo Quemado Reef",
+    site == "CARP" ~ "Carpinteria Reef",
+    site == "MOHK" ~ "Mohawk Reef",
+    site == "IVEE" ~ "Isla Vista Reef"))
 ```
 
 ## Data Visualization ##
 
 ```{r purple table, include = FALSE}
 
+purple_sample <- purple_urchins %>% 
+  group_by(site, year) %>% 
+  summarize(sample_size = n())
+
+kbl(purple_sample)
 ```
 
 ```{r purple graph}
 
+ggplot(purple_sample,
+       aes(x = year, y = sample_size)) +
+  geom_col() +
+  facet_wrap(~ site) +
+  labs(x = "Year",
+       y = "Urchin Count")
 ```
+
+**Figure 2. Urchin count by site and year.** This bar graph shows observations of the sample size of purple sea urchins (*Strongylocentrotus purpuratus*) across several years at 5 sites along the Santa Barbara Coastal LTER.
 
 GRAPH QUESTIONS
 
