@@ -69,7 +69,7 @@ urchin_summary <- urchins %>%
 urchin_summary %>% 
   kbl(col.names = c("Species Common Name", "Mean Size (cm)", "Standard Deviation (cm)",
                     "Median Size (cm)", "Sample Size (n)"),
-      caption = "<b>Table 1. Summary statistics for urchin sizes.</b> Mean, standard deviation, and median in cm and sample size of purple and red sea  urchins (<i>Strongylocentrotus purpuratus</i> and <i>Mesocentrotus franciscanus</i>) observed at Santa Barbara Coastal LTER.") %>% 
+      caption = "<b>Table 1. Summary statistics for urchin sizes.</b> Mean, standard deviation, and median in cm with sample sizes of purple and red sea  urchins (<i>Strongylocentrotus purpuratus</i> and <i>Mesocentrotus franciscanus</i>) observed at Santa Barbara Coastal LTER.") %>% 
   kable_classic()
 ```
 
