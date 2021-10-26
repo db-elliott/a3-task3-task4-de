@@ -47,9 +47,7 @@ purple_summary <- purple_NAPL %>%
   group_by(treatment) %>% 
   summarize(mean_size_cm = mean(size))
 
-purple_summary %>% 
-  kbl(col.names = c("Treatment", "Mean Size (cm)")) %>% 
-  kable_classic()
+purple_summary
 ```
 
 ## Data Exploration ##
@@ -60,5 +58,15 @@ ggplot(data = purple_NAPL,
        aes(x = size)) + 
   geom_histogram(bins = 10) +
   facet_wrap(~ treatment)
+
+purple_NAPL_con <- purple_NAPL %>% 
+  filter(treatment == "CONTROL")
+
+purple_NAPL_ann <- purple_NAPL %>% 
+  filter(treatment == "ANNUAL")
+
+qqnorm(purple_NAPL_con$size)
+
+qqnorm(purple_NAPL_ann$size)
 ```
 
