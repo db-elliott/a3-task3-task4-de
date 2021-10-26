@@ -7,5 +7,58 @@ output: html_document
 
 ```{r setup, include=TRUE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(tidyverse)
+library(janitor)
+library(here)
+library(lubridate)
+library(kableExtra)
+```
+
+## Overview ##
+
+This code wrangles and visualizes data of red and purple urchins sizes observed at 5 sites along the Santa Barbara coast.
+
+**Data Citation:** Reed, D. 2020. SBC LTER: Reef: Long-term experiment: Kelp removal: Urchin size frequency distribution ver 20. Environmental Data Initiative. https://doi.org/10.6073/pasta/5a1e9ef03aa47bd2225c0bb98a02a63b. 
+
+## Read In Data ##
+
+urchins.csv contains observations about size frequencies of red and purple sea urchins in the Santa Barbara Coastal LTER 
+
+```{r csv}
+
+urchins <- read_csv(here("data", "urchins.csv")) %>% 
+  clean_names()
+```
+
+## Data Wrangling ##
+
+Compare mean size of purple urchins in both treatment groups at Naples Reef in 2010
+
+```{r purple subset}
+
+purple_NAPL <- urchins %>%
+  filter(site == "NAPL") %>% 
+  mutate(date = mdy(date)) %>% 
+  mutate(year = year(date)) %>% 
+  filter(year == "2010")
+
+purple_summary <- purple_NAPL %>% 
+  group_by(treatment) %>% 
+  summarize(mean_size_cm = mean(size))
+
+purple_summary %>% 
+  kbl(col.names = c("Treatment", "Mean Size (cm)")) %>% 
+  kable_classic()
+```
+
+## Data Exploration ##
+
+```{r hist/qq}
+
+ggplot(data = purple_NAPL,
+       aes(x = size)) + 
+  geom_histogram(bins = 10) +
+  facet_wrap(~ treatment)
 ```
 
