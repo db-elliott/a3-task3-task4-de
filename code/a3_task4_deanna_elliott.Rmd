@@ -38,6 +38,7 @@ Compare mean size of purple urchins in both treatment groups at Naples Reef in 2
 ```{r purple subset}
 
 purple_NAPL <- urchins %>%
+  filter(common_name == "Purple Urchin") %>% 
   filter(site == "NAPL") %>% 
   mutate(date = mdy(date)) %>% 
   mutate(year = year(date)) %>% 
@@ -56,30 +57,21 @@ Create exploratory histogram and qq plots for both treatments in purple_NAPL
 
 ggplot(data = purple_NAPL,
        aes(x = size)) + 
-  geom_histogram(bins = 10) +
+  geom_histogram() +
   facet_wrap(~ treatment)
 ```
 
-Purple urchin size distributions seem more skewed toward the smaller side for both treatments, though the annual kelp removal treatment definitely has a higher volume of small urchins. On the other hand, the control treatment with no kelp removal has a higher volume of larger urchins.
+Purple urchin size seems more skewed toward the smaller side for the annual kelp removal treatment. On the other hand, the control treatment with no kelp removal has a more even distribution, though it is also skewed slightly positively
 
-```{r qq control}
-purple_NAPL_con <- purple_NAPL %>% 
-  filter(treatment == "CONTROL")
 
-qqnorm(purple_NAPL_con$size)
+```{r qq plots}
+
+ggplot(data = purple_NAPL, aes(sample = size)) +
+  geom_qq() + 
+  facet_wrap(~ treatment)
 ```
 
-The control treatment is not normal, based on the qq plot. As shown in the histogram, the data is negatively skewed.
-
-```{r qq annual}
-
-purple_NAPL_ann <- purple_NAPL %>% 
-  filter(treatment == "ANNUAL")
-
-qqnorm(purple_NAPL_ann$size)
-```
-
-The annual treatment is also not normal, based on its qq plot. The data is even more negatively skewed, as seen in the histogram.
+The annual treatment is not normal, based on its histogram and qq plot. The data is quite positively skewed. On the other hand, I would say the control data is normal, or normal enough, based on the plots. Though it is slightly positively skewed, the data follows the normal curve fairly well in the histogram.
 
 
 ## Statistical Summary Table ##
