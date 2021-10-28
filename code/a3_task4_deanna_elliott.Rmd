@@ -61,7 +61,7 @@ ggplot(data = purple_NAPL,
   facet_wrap(~ treatment)
 ```
 
-Purple urchin size seems more skewed toward the smaller side for the annual kelp removal treatment. On the other hand, the control treatment with no kelp removal has a more even distribution, though it is also skewed slightly positively
+Purple urchin size seems more skewed toward the smaller side for the annual kelp removal treatment. On the other hand, the control treatment with no kelp removal has a more even distribution, though it is also skewed slightly positively.
 
 
 ```{r qq plots}
