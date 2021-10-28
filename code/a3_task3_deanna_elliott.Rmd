@@ -42,8 +42,8 @@ Create a species-faceted histogram of urchin size and count with caption
 
 ggplot(data = urchins,
        aes(x = size, fill = common_name)) +
-           scale_fill_manual(values = c("darkorchid3", "firebrick3"),
-                             name = "Species") +
+           scale_fill_manual(values = c("darkorchid3", "firebrick3")) +
+  theme(legend.position = "none") +
   xlim(0, 15) +
   geom_histogram(bins = 10) +
   facet_wrap(~ common_name) +
@@ -102,7 +102,7 @@ Group purple urchins by site and year, find sample sizes, plot
 ```{r purple table, include = FALSE}
 
 purple_sample <- purple_urchins %>% 
-  group_by(site, year) %>% 
+  group_by(site_full, year) %>% 
   summarize(sample_size = n())
 
 kbl(purple_sample)
@@ -113,7 +113,7 @@ kbl(purple_sample)
 ggplot(purple_sample,
        aes(x = year, y = sample_size)) +
   geom_col() +
-  facet_wrap(~ site) +
+  facet_wrap(~ site_full) +
   labs(x = "Year",
        y = "Urchin Count")
 ```
